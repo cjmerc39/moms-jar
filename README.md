@@ -12,12 +12,18 @@ This repo and the published site hold no personal content. Slips, photos, and na
 ## Tests
 
 ```
-node --test
+node --test        # date and release math, and config checks
+npm run test:db    # privacy tests, against the moms-jar-test project only
 ```
+
+The privacy tests need a secrets file outside the repo (`~/.moms-jar/test.env`) holding the test project's secret key and database login. Without it they are skipped. They rebuild the test project from `db/migrations` on every run, try every privacy rule through the public API the way someone with browser tools would, and clean up after themselves.
 
 ## Privacy
 
-To be written with the access rules (step 3), including a plain statement that the database owner could technically see private slips in Supabase's own dashboard, and that the app never shows them.
+- Who can see what is enforced by the database's own access rules (`db/migrations`), not just by the app.
+- A **private** slip is visible only to the person who wrote it, and to Mom once it has been released. Other family members, including the admin, can't see it in the app or by poking at the database through the API. The same goes for its photo.
+- Mom sees only slips released to her. Her stars and read flags are visible only to her.
+- **The database owner (CJ) could technically see private slips in Supabase's own dashboard**, the way the owner of any database can see what's in it. The app never shows them.
 
 ## Setup on phones
 
