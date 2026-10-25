@@ -1,0 +1,10 @@
+# Personal content never goes in this public repo. See MOMS-JAR-SPEC.md section 2.
+*.jarpack
+packs/
+
+node_modules/
+.DS_Store
+Thumbs.db
+
+# The spec has family names in its examples, so it stays local.
+MOMS-JAR-SPEC.md
