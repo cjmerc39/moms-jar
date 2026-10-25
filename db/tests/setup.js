@@ -116,7 +116,10 @@ export async function clearData({ db, admin }) {
     const r = await admin('GET', `/auth/v1/admin/users?page=${page}&per_page=100`);
     const users = r.data?.users || [];
     for (const u of users) {
-      if (u.email?.endsWith(`@${TEST_EMAIL_DOMAIN}`)) await admin('DELETE', `/auth/v1/admin/users/${u.id}`);
+      // Test accounts, and device sign-ins made by the redeem-invite function.
+      if (u.email?.endsWith(`@${TEST_EMAIL_DOMAIN}`) || u.email?.endsWith('@devices.moms-jar.invalid')) {
+        await admin('DELETE', `/auth/v1/admin/users/${u.id}`);
+      }
     }
     if (users.length < 100) break;
   }
@@ -124,6 +127,9 @@ export async function clearData({ db, admin }) {
     do $$ begin
       if to_regclass('public.people') is not null then
         truncate public.mom_marks, public.slips, public.prompts, public.people cascade;
+      end if;
+      if to_regclass('private.code_failures') is not null then
+        truncate private.code_failures;
       end if;
     end $$;`);
 }
@@ -149,8 +155,8 @@ export async function makePerson(db, account, name, role) {
   const person = (await db.query(
     'insert into public.people (name, role) values ($1, $2) returning id', [name, role])).rows[0];
   const invite = (await db.query(
-    'insert into private.invites (person_id, token_hash) values ($1, $2) returning id',
-    [person.id, crypto.randomBytes(32).toString('hex')])).rows[0];
+    'insert into private.invites (person_id, token_hash, code_hash) values ($1, $2, $3) returning id',
+    [person.id, crypto.randomBytes(32).toString('hex'), crypto.randomBytes(32).toString('hex')])).rows[0];
   if (account) {
     await db.query(
       'insert into private.person_accounts (user_id, person_id, invite_id) values ($1, $2, $3)',

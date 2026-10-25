@@ -9,4 +9,7 @@ drop policy if exists "moms-jar: authors remove photos from waiting slips" on st
 
 drop table if exists public.mom_marks, public.slips, public.prompts, public.settings, public.people cascade;
 drop function if exists public.bank_summary();
+drop function if exists public.whoami(), public.touch_me(), public.admin_people(),
+  public.admin_make_link(uuid), public.admin_turn_off_link(uuid), public.admin_remove_person(uuid),
+  public.redeem_invite(text, text), public.link_device(uuid, uuid, uuid, text);
 drop schema if exists private cascade;

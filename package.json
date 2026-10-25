@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "test:db": "node --test db/tests/privacy.dbtest.js"
+    "test:db": "node --test --test-concurrency=1 \"db/tests/*.dbtest.js\""
   },
   "devDependencies": {
     "pg": "^8.23.1"
