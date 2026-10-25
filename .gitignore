@@ -7,4 +7,4 @@ node_modules/
 Thumbs.db
 
 # The spec has family names in its examples, so it stays local.
-MOMS-JAR-SPEC.md
+MOMS-JAR-SPEC*.md

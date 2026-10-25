@@ -1,12 +1,12 @@
 # moms-jar
 
-A digital version of the paper "Mom's Jar": one slip unlocks each day.
+A digital version of the paper "Mom's Jar". Family members add slips from their phones into a shared bank, and one slip is released to Mom each day.
 
-This repo and the published site hold no personal content. The deployed app is an empty jar. Slips and photos arrive in a `.jarpack` file made with `builder.html` and loaded onto the phone by hand. `.jarpack` files and `packs/` are gitignored.
+This repo and the published site hold no personal content. Slips, photos, and names live only in the hosted database (Supabase), protected by the database's own access rules.
 
-- `index.html`: the app (coming in step 3)
-- `builder.html`: the page for writing slips and exporting a pack (coming in step 2)
-- `logic.js`: all date and unlock math, as plain functions
+- `index.html`: the app (coming in a later step)
+- `logic.js`: date and release math, as plain functions
+- `config.js`: public Supabase connection settings (no secrets)
 - The build spec is kept locally, not in this repo.
 
 ## Tests
@@ -15,6 +15,10 @@ This repo and the published site hold no personal content. The deployed app is a
 node --test
 ```
 
-## Setup on her phone
+## Privacy
 
-To be written once the phone type is known (spec section 10).
+To be written with the access rules (step 3), including a plain statement that the database owner could technically see private slips in Supabase's own dashboard, and that the app never shows them.
+
+## Setup on phones
+
+To be written once the phone types are known.
